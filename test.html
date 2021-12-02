@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Advent of Code Solutions</title>
+    <script>
+      function puzzle1(input) {
+        // a bit of input parsing...
+        var depths = [];
+        for (var line of input.split("\n")) {
+          var depth = parseInt(line);
+          if (!isNaN(depth)) {
+            depths.push(depth);
+          }
+        }
+
+        // part 1
+        var count1 = 0;
+        for (var i = 1; i < depths.length; i++) {
+          if (depths[i] > depths[i - 1]) {
+            count1++;
+          }
+        }
+
+        // part 2
+        var count2 = 0;
+        for (var i = 1; i < depths.length; i++) {
+          const sum3 = (a, i) => a.slice(i, i + 3).reduce((a, b) => a + b);
+          if (sum3(depths, i) > sum3(depths, i - 1)) {
+            count2++;
+          }
+        }
+
+        return `${count1}, ${count2}`;
+      }
+
+      window.onload = function () {
+        var input = document.getElementById("myFile");
+        var output = document.getElementById("output");
+
+        input.addEventListener("change", function () {
+          if (this.files && this.files[0]) {
+            var myFile = this.files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function (e) {
+              output.textContent = puzzle1(e.target.result);
+            });
+
+            reader.readAsText(myFile);
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    Upload input file: <br />
+    <input type="file" id="myFile"><br /><br />
+    Result: <br />
+    <textarea id="output"></textarea>
+  </body>
+</html>
