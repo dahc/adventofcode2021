@@ -6,11 +6,17 @@
     <script src="./solutions.js"></script>
   </head>
   <body>
-    Upload input file: <br />
-    <input type="file" id="myFile"><br /><br />
-    Result: <br />
+    Select puzzle: <br>
+    <select id="puzzle">
+      <option value="day1">Day 1</option>
+      <option value="day2">Day 2</option>
+    </select><br><br>
+    Upload input file: <br>
+    <input type="file" id="myFile"><br><br>
+    Result: <br>
     <textarea id="output"></textarea>
     <script>
+      var puzzle = document.getElementById("puzzle");
       var input = document.getElementById("myFile");
       var output = document.getElementById("output");
 
@@ -20,7 +26,7 @@
           var reader = new FileReader();
 
           reader.addEventListener("load", function (e) {
-            output.textContent = day2(e.target.result);
+            output.textContent = window[puzzle.value](e.target.result);
           });
 
           reader.readAsText(myFile);
