@@ -27,3 +27,52 @@ function day1(input) {
 
   return `${count1}, ${count2}`;
 }
+
+function day2(input) {
+  // input parsing
+  var instructions = [];
+  for (var line of input.split("\n")) {
+    var tokens = line.split(" ");
+    var instruction = { "key": tokens[0], "value": parseInt(tokens[1]) };
+    if (!isNaN(instruction.value)) {
+      instructions.push(instruction);
+    }
+  }
+
+  // part 1
+  var position = 0, depth = 0;
+  for (var instruction of instructions) {
+    switch (instruction.key) {
+    case "forward":
+      position += instruction.value;
+      break;
+    case "up":
+      depth -= instruction.value;
+      break;
+    case "down":
+      depth += instruction.value;
+      break;
+    }
+  }
+  var result1 = position * depth;
+
+  // part 2
+  var position = 0, depth = 0, aim = 0;
+  for (var instruction of instructions) {
+    switch (instruction.key) {
+    case "forward":
+      position += instruction.value;
+      depth += aim*instruction.value;
+      break;
+    case "up":
+      aim -= instruction.value;
+      break;
+    case "down":
+      aim += instruction.value;
+      break;
+    }
+  }
+  var result2 = position * depth;
+
+  return `${result1}, ${result2}`;
+}
